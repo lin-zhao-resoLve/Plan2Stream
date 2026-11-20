@@ -74,16 +74,15 @@ def run_ffmpeg(args: list[str], out: Path) -> None:
 # Encoders
 # --------------------------------------------------------------------------- #
 def enc_item_video(src: Path, out: Path, with_audio: bool) -> None:
-    """Item video: H.264 High, crf 25, <=960 wide, 24 fps, optional AAC audio."""
+    """Item video: the original bitstream (no re-encode), first video + audio stream, moov atom up front.
+
+    Sources are H.264 yuv420p (+ AAC), which browsers play as-is.
+    """
     args = ["-i", str(src), "-map", "0:v:0"]
     if with_audio:
         args += ["-map", "0:a:0"]
-    args += [
-        "-vf", "scale='min(960,iw)':-2,fps=24,format=yuv420p",
-        "-c:v", "libx264", "-profile:v", "high", "-crf", "25", "-preset", "slow",
-        "-movflags", "+faststart",
-    ]
-    args += ["-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2"] if with_audio else ["-an"]
+    args += ["-c", "copy", "-movflags", "+faststart"]
+    args += [] if with_audio else ["-an"]
     run_ffmpeg(args, out)
 
 
