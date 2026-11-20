@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Plan2Stream: Real-Time Long Audio-Video Generation with Continuous Planning</title>
+  <meta name="description" content="Plan2Stream is a unified two-stage system for real-time, long video and audio-video generation with continuous planning. Eight tasks, one model, hour-scale streams, 58 FPS end to end at 640×352." />
+  <meta name="theme-color" content="#05060a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=1" />
+</head>
+<body>
+  <!-- ───────────────────────── Navigation (appears after the intro) ───────────────────────── -->
+  <header class="nav" id="nav">
+    <a class="nav-logo" href="#top">Plan<span>2</span>Stream</a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#overview">Overview</a>
+      <a href="#tasks">Tasks</a>
+      <a href="#hour">Hour-scale</a>
+      <a href="#method">Method</a>
+      <a href="#compare" data-optional="compare">Compare</a>
+      <a href="#bibtex">BibTeX</a>
+    </nav>
+    <button class="sound-btn" id="sound-btn" aria-pressed="false" aria-label="Toggle sound">
+      <svg class="i-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.6 3 2.7-2.7-1.4-1.4-2.7 2.7-2.7-2.7-1.4 1.4 2.7 2.7-2.7 2.7 1.4 1.4 2.7-2.7 2.7 2.7 1.4-1.4z"/></svg>
+      <svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>
+      <span>Sound</span>
+    </button>
+  </header>
+
+  <!-- ───────────────────────── Intro: plan → stream → wordmark ───────────────────────── -->
+  <div class="hero-track" id="hero-track">
+    <section class="hero" id="top" aria-label="Plan2Stream introduction">
+      <h1 class="sr-only">Plan2Stream: Real-Time Long Audio-Video Generation with Continuous Planning</h1>
+
+      <div class="wall" id="wall" aria-hidden="true"></div>
+      <div class="shade" id="shade" aria-hidden="true"></div>
+      <!-- Two fronts move at once: the planner runs ahead, synthesis follows at a fixed lag. -->
+      <div class="fronts" aria-hidden="true">
+        <div class="front front-plan" id="front-plan"><span>Planner · low-res · 12 fps</span></div>
+        <div class="front front-syn" id="front-syn"><span>Synthesis · high-res · 24 fps</span></div>
+      </div>
+
+      <!-- Black multiply layer: the white wordmark lets the video wall show through. -->
+      <div class="mask" id="mask" aria-hidden="true">
+        <p class="mask-word" id="mask-word">P<span id="mask-focus">l</span>an2Stream</p>
+      </div>
+      <div class="lens-ring" id="lens-ring" aria-hidden="true"></div>
+
+      <div class="hero-intro" id="hero-intro" aria-hidden="true">
+        <p class="hi-line hi-plan"><em>Planning</em> what’s next.</p>
+        <p class="hi-line hi-stream"><em>Streaming</em> what’s now.</p>
+        <p class="hi-sub">at the same time</p>
+      </div>
+
+      <div class="hud" id="hud" aria-hidden="true">
+        <span class="hud-dot plan"></span><span class="hud-mode plan">PLAN</span><span class="hud-spec">low-res · 12 fps</span>
+        <span class="hud-sep">∥</span>
+        <span class="hud-dot syn"></span><span class="hud-mode syn">STREAM</span><span class="hud-spec">high-res · 24 fps</span>
+      </div>
+
+      <div class="cue" id="cue" aria-hidden="true">
+        <span>Scroll to stream</span>
+        <i></i>
+      </div>
+
+      <p class="hero-kicker" id="hero-kicker">Real-time · Long-horizon · Audio–Video</p>
+
+      <div class="hero-content" id="hero-content">
+        <h2 class="hero-title">Real-Time Long Audio–Video Generation<br class="br-wide" /> with Continuous Planning</h2>
+        <div class="hero-authors">
+          <p class="author-row">
+            <a class="author" href="https://lin-zhao-resolve.github.io/" target="_blank" rel="noopener">Lin Zhao<sup>1,2</sup><sup class="corr">*</sup></a>
+            <a class="author" href="https://oshikaka.github.io/" target="_blank" rel="noopener">Xinru Jiang<sup>2</sup></a>
+            <a class="author" href="https://scholar.google.com/citations?user=hH1Oun0AAAAJ" target="_blank" rel="noopener">Zhengang Li<sup>1</sup></a>
+            <a class="author" href="https://hyeonho99.github.io/" target="_blank" rel="noopener">Hyeonho Jeong<sup>1</sup></a>
+            <a class="author" href="https://harveyp123.github.io/" target="_blank" rel="noopener">Hongwu Peng<sup>1</sup></a>
+          </p>
+          <!-- Ohiremen Dibua: no live homepage found (Adobe profile returns 404); left unlinked. -->
+          <p class="author-row">
+            <a class="author" href="https://www.haoranyou.com/" target="_blank" rel="noopener">Haoran You<sup>1</sup></a>
+            <span class="author">Ohiremen Dibua<sup>1</sup></span>
+            <a class="author" href="https://research.adobe.com/person/yan-kang" target="_blank" rel="noopener">Yan Kang<sup>1</sup></a>
+            <a class="author" href="https://xuelin.sites.northeastern.edu/" target="_blank" rel="noopener">Xue Lin<sup>2</sup></a>
+            <a class="author" href="https://yifanfanfanfan.github.io/" target="_blank" rel="noopener">Yifan Gong<sup>1</sup></a>
+          </p>
+        </div>
+        <p class="hero-affil"><span><sup>1</sup>Adobe Research</span><span><sup>2</sup>Northeastern University</span></p>
+        <p class="hero-corr"><sup class="corr">*</sup>Corresponding author</p>
+        <div class="hero-links">
+          <a class="pill is-soon" href="#" aria-disabled="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6V2zm8 1.5V8h4.5L14 3.5zM8.5 12h9v1.5h-9V12zm0 3.5h9V17h-9v-1.5zm0-7h4V10h-4V8.5z"/></svg>
+            Paper <small>soon</small>
+          </a>
+          <a class="pill" href="https://github.com/lin-zhao-resoLve/Plan2Stream" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg>
+            GitHub
+          </a>
+          <a class="pill" href="#tasks">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            Demos
+          </a>
+          <a class="pill" href="#bibtex">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h4v4H8.5c0 1.7.9 2.8 2.5 3.2V16c-2.6-.4-4-2.3-4-5V7zm7 0h4v4h-2.5c0 1.7.9 2.8 2.5 3.2V16c-2.6-.4-4-2.3-4-5V7z"/></svg>
+            BibTeX
+          </a>
+        </div>
+        <ul class="hero-stats">
+          <li><b>58</b><span>FPS · 640×352</span></li>
+          <li><b>24</b><span>FPS · 960×544</span></li>
+          <li><b>8</b><span>tasks · 1 model</span></li>
+        </ul>
+        <p class="hero-note">End-to-end throughput on four NVIDIA H100 GPUs</p>
+      </div>
+    </section>
+  </div>
+
+  <main id="site">
+    <!-- ───────────────────────── 01 Overview ───────────────────────── -->
+    <section class="section" id="overview">
+      <div class="wrap">
+        <p class="eyebrow reveal">01 / Overview</p>
+        <h2 class="display reveal">Planned ahead.<br /><span class="grad">Streamed in real time.</span></h2>
+        <p class="lead reveal">
+          Plan2Stream is a two-stage system for real-time, long video and audio–video streaming.
+          A <b>planner</b> continuously plans ahead of synthesis, producing compact visual or joint audio–visual
+          plans at half the output resolution and frame rate. <b>Synthesis</b> begins as soon as the first plan
+          chunk is ready, and each short synthesis chunk receives guidance from planned content <em>beyond</em>
+          its own span throughout denoising.
+        </p>
+
+        <div class="features">
+          <article class="feature reveal" style="--accent:79,124,255">
+            <p class="k">Real-time</p>
+            <p class="stat"><span data-count="58">58</span><small>FPS</small></p>
+            <h3>End-to-end streaming.</h3>
+            <p>58 FPS at 640×352 and 24 FPS at 960×544 on four H100 GPUs. Both stages are jointly distilled for four-step generation, and a distributed runtime overlaps planning, synthesis and decoding.</p>
+          </article>
+          <article class="feature reveal" style="--accent:63,224,255">
+            <p class="k">Unified</p>
+            <p class="stat"><span data-count="8">8</span><small>tasks</small></p>
+            <h3>One model, eight tasks.</h3>
+            <p>Text plus an optional reference image and/or input audio; video or joint audio–video out. The same parameters serve both stages and all tasks.</p>
+          </article>
+          <article class="feature reveal" style="--accent:160,107,255">
+            <p class="k">Long-horizon</p>
+            <p class="stat"><span>∞</span><small>rolling</small></p>
+            <h3>Plans that keep moving.</h3>
+            <p>Training-Aligned Rolling Guidance supplies future guidance through bounded plan windows, and Plan-Aligned RoPE keeps time aligned as those windows advance.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── 02 Tasks (switchboard) ───────────────────────── -->
+    <section class="section" id="tasks">
+      <div class="wrap">
+        <p class="eyebrow reveal">02 / Eight tasks, one model</p>
+        <h2 class="display reveal">Choose the inputs.<br /><span class="grad">Get a stream.</span></h2>
+
+        <div class="board reveal">
+          <div class="panel board-controls">
+            <div class="ctl">
+              <p class="ctl-label">Inputs</p>
+              <div class="ctl-row">
+                <button class="chip locked" aria-pressed="true" data-in="T" title="Text is always provided"><i class="dot"></i>Text</button>
+                <button class="chip" aria-pressed="false" data-in="I"><i class="dot"></i>Image</button>
+                <button class="chip" aria-pressed="false" data-in="A"><i class="dot"></i>Audio</button>
+              </div>
+            </div>
+            <div class="ctl">
+              <p class="ctl-label">Output</p>
+              <div class="seg" role="group" aria-label="Output modality">
+                <button aria-pressed="true" data-out="V">Video</button>
+                <button aria-pressed="false" data-out="AV">Audio + Video</button>
+              </div>
+            </div>
+            <div class="task-readout">
+              <p class="task-code" id="task-code" aria-live="polite">T2V</p>
+              <p class="task-name" id="task-name"></p>
+              <p class="task-desc" id="task-desc"></p>
+            </div>
+          </div>
+          <div class="panel matrix-panel">
+            <p class="ctl-label">All tasks</p>
+            <div class="matrix" id="matrix"></div>
+          </div>
+        </div>
+
+        <div class="stage reveal">
+          <div id="task-player"></div>
+          <aside class="io" id="io"></aside>
+        </div>
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── 03 Long-horizon ───────────────────────── -->
+    <section class="section" id="hour">
+      <div class="wrap">
+        <p class="eyebrow reveal">03 / Hour-scale generation</p>
+        <h2 class="display reveal">One continuous <span class="grad">hour.</span></h2>
+        <p class="lead reveal">Each video below is a single one-hour rollout at 960×544 and 24 fps with synchronized audio.</p>
+        <div class="long-stage reveal">
+          <div id="long-player"></div>
+          <div class="long-hud">
+            <div class="long-clock" id="long-clock">00:00:00.0<span class="tot"> / 1:00:00</span></div>
+            <div class="long-tabs" id="long-tabs"></div>
+          </div>
+          <p class="long-caption" id="long-caption"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── 04 Method ───────────────────────── -->
+    <section class="section" id="method">
+      <div class="wrap">
+        <p class="eyebrow reveal">04 / Method</p>
+        <h2 class="display reveal">Planning and synthesis,<br /><span class="grad">running in parallel.</span></h2>
+
+        <div class="flow3d reveal">
+          <iframe id="method3d" src="method3d.html" title="Planning ahead of synthesis: interactive 3D schematic" loading="lazy"></iframe>
+        </div>
+        <p class="flow3d-cap">Interactive 3D schematic · drag to rotate · pinch or Ctrl+scroll to zoom · <a href="method3d.html" target="_blank" rel="noopener">open full screen ↗</a></p>
+
+        <div class="cards">
+          <article class="card reveal"><span class="n">01</span><h3>Continuous planning</h3><p>The planner generates compact visual or joint audio–visual plans at half the output resolution and frame rate, jointly modeling longer intervals with fewer tokens.</p></article>
+          <article class="card reveal"><span class="n">02</span><h3>Training-Aligned Rolling Guidance</h3><p>Synthesis is guided by planned content beyond each chunk through bounded plan windows, keeping the local conditioning layout consistent between training and inference.</p></article>
+          <article class="card reveal"><span class="n">03</span><h3>Plan-Aligned RoPE</h3><p>Maintains temporal alignment between planning and synthesis within bounded positional coordinates as the plan windows advance.</p></article>
+          <article class="card reveal"><span class="n">04</span><h3>Hybrid on-policy distillation</h3><p>Both stages are jointly distilled for four-step generation with an on-policy hybrid objective, unified through their conditional moments.</p></article>
+          <article class="card reveal"><span class="n">05</span><h3>Long rollout training</h3><p>Training extends to long self-generated rollouts (32 s) that use the same plan updates and history caching as streaming inference.</p></article>
+          <article class="card reveal"><span class="n">06</span><h3>Overlapped runtime</h3><p>Planning keeps its own GPU while synthesis is parallelized across the rest; planning, synthesis and decoding overlap for continuous output.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── 05 Comparisons (rendered only when media.json has them) ───────────────────────── -->
+    <section class="section" id="compare" hidden>
+      <div class="wrap">
+        <p class="eyebrow reveal">05 / Comparisons</p>
+        <h2 class="display reveal">Side by side.<br /><span class="grad">Same prompt, same clock.</span></h2>
+        <div class="compare-list" id="compare-list"></div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── BibTeX ───────────────────────── -->
+    <section class="section" id="bibtex">
+      <div class="wrap">
+        <p class="eyebrow reveal">Citation</p>
+        <div class="bib reveal">
+          <button class="bib-copy" id="bib-copy">Copy</button>
+<pre id="bib-text">@article{plan2stream2026,
+  title   = {Plan2Stream: Real-Time Long Audio-Video Generation with Continuous Planning},
+  author  = {Zhao, Lin and Jiang, Xinru and Li, Zhengang and Jeong, Hyeonho and Peng, Hongwu and You, Haoran and Dibua, Ohiremen and Kang, Yan and Lin, Xue and Gong, Yifan},
+  journal = {arXiv preprint},
+  year    = {2026}
+}</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-in">
+      <span class="nav-logo">Plan<span>2</span>Stream</span>
+      <span class="foot-note">All videos are generated by Plan2Stream unless labeled otherwise.</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <button class="sound-hint" id="sound-hint" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg><span>Click anywhere to turn on sound, then hover a video to hear it</span></button>
+  <div class="load-error" id="load-error" hidden></div>
+  <script src="main.js?v=1"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+# Encoded videos/posters are published as GitHub Release assets, never committed.
+media/
+*.mp4
+*.webm
+*.mov
+__pycache__/
+.DS_Store
+
+# Internal source paths (local only)
+tools/sources.json
