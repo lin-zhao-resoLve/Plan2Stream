@@ -4,7 +4,7 @@
   "repo": "Plan2Stream",
   "tag": "assets-v1"
  },
- "generated_utc": "2026-11-21T06:39:57Z",
+ "generated_utc": "2026-11-21T07:04:44Z",
  "wall": [
   {
    "id": "wall-01",
@@ -284,6 +284,23 @@
    "has_audio": false,
    "title": "Hillside selfie",
    "caption": "Four young adults take a joyful selfie outdoors, laughing and holding green glass bottles, with a bright sky and green hills in the background.",
+   "input_image": null,
+   "input_image_is_first_frame": false,
+   "input_audio": null,
+   "input_audio_is_output_audio": false,
+   "waveform": null
+  },
+  {
+   "id": "t2v-14",
+   "task": "T2V",
+   "seconds": 10.0,
+   "width": 640,
+   "height": 352,
+   "src": "t2v-14.mp4",
+   "poster": "t2v-14.jpg",
+   "has_audio": false,
+   "title": "Barnacle rocks surf",
+   "caption": "Waves crash against dark, barnacle-covered rocks on a rocky shoreline, creating white foam and spray under bright natural light, with a static low-angle shot…",
    "input_image": null,
    "input_image_is_first_frame": false,
    "input_audio": null,
