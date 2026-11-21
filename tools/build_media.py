@@ -355,7 +355,7 @@ def main() -> int:
             "poster": f"{sid}.jpg",
             "has_audio": audio,
             "title": s.get("title") or sid,
-            "caption": clip(pp["scene"] or pp["prompt"], 160),
+            "caption": s.get("caption") or clip(pp["scene"] or pp["prompt"], 160),  # sources.json may override
             "input_image": f"{sid}-input.jpg" if has_img and done(media / f"{sid}-input.jpg") else None,
             "input_image_is_first_frame": first_frame,
             "input_audio": in_audio,

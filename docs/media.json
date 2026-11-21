@@ -4,7 +4,7 @@
   "repo": "Plan2Stream",
   "tag": "assets-v1"
  },
- "generated_utc": "2026-11-21T02:23:40Z",
+ "generated_utc": "2026-11-21T02:50:58Z",
  "wall": [
   {
    "id": "wall-01",
@@ -4089,7 +4089,7 @@
    "poster": "it2av-09.jpg",
    "has_audio": true,
    "title": "Peacock display",
-   "caption": "A peacock stands on a garden stone path and slowly fans its tail feathers while the camera moves closer.",
+   "caption": "A peacock stands on a garden stone path and slowly walks forward.",
    "input_image": "it2av-09-input.jpg",
    "input_image_is_first_frame": false,
    "input_audio": null,
