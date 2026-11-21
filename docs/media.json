@@ -4,7 +4,7 @@
   "repo": "Plan2Stream",
   "tag": "assets-v1"
  },
- "generated_utc": "2026-11-21T02:52:55Z",
+ "generated_utc": "2026-11-21T03:13:57Z",
  "wall": [
   {
    "id": "wall-01",
@@ -336,6 +336,23 @@
    "title": "Close-up portrait",
    "caption": "A woman with long black hair is posing for a picture in a close-up shot.",
    "input_image": "it2v-14-input.jpg",
+   "input_image_is_first_frame": false,
+   "input_audio": null,
+   "input_audio_is_output_audio": false,
+   "waveform": null
+  },
+  {
+   "id": "it2v-15",
+   "task": "IT2V",
+   "seconds": 30.0,
+   "width": 960,
+   "height": 544,
+   "src": "it2v-15.mp4",
+   "poster": "it2v-15.jpg",
+   "has_audio": false,
+   "title": "Spotlight musician",
+   "caption": "A solitary musician with long, curly blonde hair stands on a dark, empty stage, dramatically lit by a single overhead spotlight that casts them in silhouette.",
+   "input_image": "it2v-15-input.jpg",
    "input_image_is_first_frame": false,
    "input_audio": null,
    "input_audio_is_output_audio": false,
