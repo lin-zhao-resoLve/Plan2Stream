@@ -1,4 +1,4 @@
-# Plan2Stream project page
+# Plan2Stream
 
 Static project page for **Plan2Stream: Real-Time Long Audio-Video Generation with Continuous Planning**.
 
@@ -18,38 +18,3 @@ tools/
                  "Planning ahead of synthesis (3D).html": English UI, dark theme, page-friendly scrolling
 media/           encoded videos/posters (gitignored; published as release assets)
 ```
-
-## Why videos are release assets
-
-GitHub Pages sites are limited to about 1 GB, and single git files to 100 MB. Videos therefore
-live as assets of a GitHub Release (`assets-v1`), and the page loads them from
-`https://github.com/<owner>/<repo>/releases/download/assets-v1/<file>`. Release asset names
-are flat, so `media/` has no subdirectories.
-
-## Workflow
-
-```bash
-python3 tools/build_media.py            # encode new/changed sources, rewrite docs/media.json
-python3 tools/serve.py --port 8766      # preview at http://127.0.0.1:8766 (uses local media/)
-python3 tools/publish.py --dry-run      # push main, enable Pages, upload release assets
-```
-
-On localhost the page reads videos from `media/`. Everywhere else it uses the release URL from
-`media.json` (`release.owner/repo/tag`, or `assets_base` if set). Add `?local` to force local media.
-
-## Going public
-
-1. Make the repository public. Release assets of a private repository are not publicly downloadable.
-2. Settings → Pages → Deploy from a branch → `main` / `docs`.
-
-## TODO
-
-- Final author list, affiliations, paper/code links, and BibTeX (`docs/index.html`).
-- Real planner outputs for the rest of the hero wall. Tiles whose source sets `wall_plan_video`
-  (currently wall-02 and wall-14, from the FE "Generated Future Conditioning" videos) use the real
-  planner output; the others simulate it by downscaling the final video to 240 px wide and 12 fps.
-  Per-tile options in tools/sources.json: `role: "wall"` (tile only), `wall_start`, `wall_len`, `wall_plan_video`.
-- Hour-scale section: sources with `role: "hour"` are copied losslessly (remux, `+faststart`), with a poster and a
-  per-minute sprite (`<id>-sprite.jpg`) that drives the scrubber preview and the 5-minute strip. tools/serve.py supports
-  HTTP Range requests so long videos can be seeked locally.
-- More TA2V / ITA2V / ITA2AV samples (one each), and baseline comparisons (`comparisons` in media.json).
