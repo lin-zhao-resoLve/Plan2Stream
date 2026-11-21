@@ -4,7 +4,7 @@
   "repo": "Plan2Stream",
   "tag": "assets-v1"
  },
- "generated_utc": "2026-11-20T23:44:18Z",
+ "generated_utc": "2026-11-21T00:10:33Z",
  "wall": [
   {
    "id": "wall-01",
@@ -188,6 +188,40 @@
   }
  ],
  "items": [
+  {
+   "id": "t2v-08",
+   "task": "T2V",
+   "seconds": 5.0,
+   "width": 960,
+   "height": 544,
+   "src": "t2v-08.mp4",
+   "poster": "t2v-08.jpg",
+   "has_audio": false,
+   "title": "Home office robots",
+   "caption": "A young woman with long dark hair, wearing a light blouse and brown vest, sits at a white desk in a bright home office, typing on a silver laptop while…",
+   "input_image": null,
+   "input_image_is_first_frame": false,
+   "input_audio": null,
+   "input_audio_is_output_audio": false,
+   "waveform": null
+  },
+  {
+   "id": "t2v-09",
+   "task": "T2V",
+   "seconds": 30.0,
+   "width": 960,
+   "height": 544,
+   "src": "t2v-09.mp4",
+   "poster": "t2v-09.jpg",
+   "has_audio": false,
+   "title": "Video call",
+   "caption": "In a bright living room, a person in a beige sweater holds a laptop, viewed over the shoulder, while a woman with curly blonde hair on screen waves and speaks…",
+   "input_image": null,
+   "input_image_is_first_frame": false,
+   "input_audio": null,
+   "input_audio_is_output_audio": false,
+   "waveform": null
+  },
   {
    "id": "it2v-08",
    "task": "IT2V",
