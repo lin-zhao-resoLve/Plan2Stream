@@ -4,7 +4,7 @@
   "repo": "Plan2Stream",
   "tag": "assets-v1"
  },
- "generated_utc": "2026-11-21T07:15:52Z",
+ "generated_utc": "2026-11-21T09:10:28Z",
  "wall": [
   {
    "id": "wall-01",
@@ -352,6 +352,23 @@
    "has_audio": false,
    "title": "Twin surfers",
    "caption": "The video captures two surfers in full black wetsuits riding a wave in the open ocean.",
+   "input_image": null,
+   "input_image_is_first_frame": false,
+   "input_audio": null,
+   "input_audio_is_output_audio": false,
+   "waveform": null
+  },
+  {
+   "id": "t2v-18",
+   "task": "T2V",
+   "seconds": 5.04,
+   "width": 960,
+   "height": 544,
+   "src": "t2v-18.mp4",
+   "poster": "t2v-18.jpg",
+   "has_audio": false,
+   "title": "Christmas hand game",
+   "caption": "In a warmly lit living room with a decorated Christmas tree, a man in a gray t-shirt and striped pajama pants sits beside a young child in blue and white…",
    "input_image": null,
    "input_image_is_first_frame": false,
    "input_audio": null,
