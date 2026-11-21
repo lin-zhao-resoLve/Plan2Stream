@@ -421,13 +421,27 @@
       if (prev) { prev.tile.classList.remove("hover"); Sound.leave(prev.syn); if (prev.w <= 0) prev.syn.pause(); }
       if (next) { next.tile.classList.add("hover"); if (heroVisible) play(next.syn); Sound.hover(next.syn); }
     };
+    // Until the first click unlocks sound, a small hint follows the cursor over audible tiles.
+    const cursorHint = h("div", "cursor-hint", `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg><span>Click once to turn on sound</span>`);
+    cursorHint.hidden = true;
+    cursorHint.setAttribute("aria-hidden", "true");
+    document.body.append(cursorHint);
+    const moveHint = (e) => {
+      const show = HOVER && !Sound.unlocked && Sound.master && !!hovered;
+      cursorHint.hidden = !show;
+      if (!show) return;
+      const x = Math.min(e.clientX + 16, innerWidth - cursorHint.offsetWidth - 8), y = Math.min(e.clientY + 18, innerHeight - cursorHint.offsetHeight - 8);
+      cursorHint.style.transform = `translate(${Math.max(8, x)}px, ${Math.max(8, y)}px)`;
+    };
+    document.addEventListener("pointerdown", () => { cursorHint.hidden = true; }, { capture: true, passive: true });
     hero.addEventListener("pointermove", (e) => {
       if (e.pointerType === "touch") return;
       // lens + hover sound live on the wordmark; the title / author block below stays plain and clickable
       setHovered(e.target.closest(".hero-content, .hero-kicker") ? null : tileAt(e.clientX, e.clientY));
+      moveHint(e);
     });
     hero.addEventListener("pointerdown", (e) => { if (e.pointerType === "touch") setHovered(tileAt(e.clientX, e.clientY)); });
-    hero.addEventListener("pointerleave", (e) => { if (e.pointerType !== "touch") setHovered(null); });
+    hero.addEventListener("pointerleave", (e) => { if (e.pointerType !== "touch") { setHovered(null); cursorHint.hidden = true; } });
 
     // Cursor lens on the settled wordmark: peek at the full stream wall.
     let lr = 0, lrTarget = 0, mx = 0, my = 0, lensRaf = 0;

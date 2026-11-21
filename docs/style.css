@@ -443,4 +443,12 @@ a.author:hover { color: #fff; border-bottom-color: var(--cyan); }
 }
 .sound-hint svg { flex: none; width: 16px; height: 16px; fill: var(--cyan); }
 .sound-hint[hidden] { display: none; }
+.cursor-hint {
+  position: fixed; left: 0; top: 0; z-index: 75; pointer-events: none; display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 12px 7px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 600; color: var(--ink); white-space: nowrap;
+  background: rgba(12, 15, 23, .86); border: 1px solid rgba(63, 224, 255, .55); box-shadow: 0 8px 24px -10px rgba(63, 224, 255, .6);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); will-change: transform;
+}
+.cursor-hint svg { flex: none; width: 14px; height: 14px; fill: var(--cyan); }
+.cursor-hint[hidden] { display: none; }
 .load-error { position: fixed; left: 50%; bottom: 24px; z-index: 80; transform: translateX(-50%); max-width: min(640px, calc(100% - 32px)); padding: 12px 16px; border-radius: 12px; background: #2a1016; border: 1px solid #6b2433; color: #ffd6de; font-size: 14px; }
