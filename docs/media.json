@@ -4,7 +4,7 @@
   "repo": "Plan2Stream",
   "tag": "assets-v1"
  },
- "generated_utc": "2026-11-21T03:13:57Z",
+ "generated_utc": "2026-11-21T03:15:29Z",
  "wall": [
   {
    "id": "wall-01",
@@ -353,6 +353,23 @@
    "title": "Spotlight musician",
    "caption": "A solitary musician with long, curly blonde hair stands on a dark, empty stage, dramatically lit by a single overhead spotlight that casts them in silhouette.",
    "input_image": "it2v-15-input.jpg",
+   "input_image_is_first_frame": false,
+   "input_audio": null,
+   "input_audio_is_output_audio": false,
+   "waveform": null
+  },
+  {
+   "id": "it2v-16",
+   "task": "IT2V",
+   "seconds": 30.0,
+   "width": 960,
+   "height": 544,
+   "src": "it2v-16.mp4",
+   "poster": "it2v-16.jpg",
+   "has_audio": false,
+   "title": "Poolside lounger",
+   "caption": "A woman with blonde hair tied back and wearing large dark sunglasses and a black-and-white halter top sits in a white plastic lounge chair by a dark, rippling…",
+   "input_image": "it2v-16-input.jpg",
    "input_image_is_first_frame": false,
    "input_audio": null,
    "input_audio_is_output_audio": false,
