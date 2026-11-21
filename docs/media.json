@@ -4,7 +4,7 @@
   "repo": "Plan2Stream",
   "tag": "assets-v1"
  },
- "generated_utc": "2026-11-21T03:31:35Z",
+ "generated_utc": "2026-11-21T03:35:18Z",
  "wall": [
   {
    "id": "wall-01",
@@ -404,6 +404,23 @@
    "title": "Rice paddy carrier",
    "caption": "A woman wearing a conical hat and dark clothing walks barefoot along a narrow grassy ridge between flooded rice paddies, carrying a wooden pole balanced…",
    "input_image": "it2v-18-input.jpg",
+   "input_image_is_first_frame": false,
+   "input_audio": null,
+   "input_audio_is_output_audio": false,
+   "waveform": null
+  },
+  {
+   "id": "it2v-19",
+   "task": "IT2V",
+   "seconds": 10.0,
+   "width": 960,
+   "height": 544,
+   "src": "it2v-19.mp4",
+   "poster": "it2v-19.jpg",
+   "has_audio": false,
+   "title": "Lighthouse wave",
+   "caption": "A large wave crashes into a lighthouse.",
+   "input_image": "it2v-19-input.jpg",
    "input_image_is_first_frame": false,
    "input_audio": null,
    "input_audio_is_output_audio": false,
