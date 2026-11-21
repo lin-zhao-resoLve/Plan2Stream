@@ -56,24 +56,27 @@
   const TASK = Object.fromEntries(TASKS.map((t) => [t.code, t]));
   const codeOf = (I, A, out) => `${I ? "I" : ""}T${A ? "A" : ""}2${out}`;
 
-  // ───────────────────────── sound: the video under the pointer is audible ─────────────────────────
+  // ───────────────────────── sound: a playing player is audible ─────────────────────────
   // Browsers allow audible playback only after a user gesture, so the first click / tap / key press
-  // anywhere unlocks sound. From then on, hovering a video (tapping it on touch screens) unmutes it
-  // and mutes every other video. The nav button is a master switch.
+  // anywhere unlocks sound. From then on, the player that most recently started playing is audible
+  // for as long as it plays, wherever the pointer is. Hover previews (thumbnails, hero wall tiles)
+  // take the sound only while hovered and hand it back afterwards. The nav button is a master switch.
   const Sound = {
     master: true,
     unlocked: false,
     unlockedAt: -1e9,
-    target: null,
+    target: null, // temporary: the hovered preview
+    owner: null, // the player that started playing most recently
     vids: new Set(),
     register(v) { v.muted = true; this.vids.add(v); },
-    unregister(v) { this.vids.delete(v); if (this.target === v) this.target = null; },
+    unregister(v) { this.vids.delete(v); if (this.target === v) this.target = null; if (this.owner === v) this.owner = null; },
+    claim(v) { if (this.owner !== v) { this.owner = v; this.apply(); } },
     hover(v) { if (this.target !== v) { this.target = v; this.apply(); } },
     leave(v) { if (this.target === v) { this.target = null; this.apply(); } },
     justUnlocked() { return performance.now() - this.unlockedAt < 800; },
     apply() {
-      const live = this.master && this.unlocked;
-      this.vids.forEach((v) => { v.muted = !(live && v === this.target); });
+      const live = this.master && this.unlocked, audible = this.target || this.owner;
+      this.vids.forEach((v) => { v.muted = !(live && v === audible); });
       document.documentElement.classList.toggle("sound-on", live);
       $("#sound-btn").setAttribute("aria-pressed", String(live));
       $("#sound-hint").hidden = this.unlocked || !this.master;
@@ -91,7 +94,7 @@
   ["pointerdown", "keydown", "touchstart"].forEach((ev) => document.addEventListener(ev, () => Sound.unlock(), { capture: true, passive: true }));
   // The first click only unlocks sound; later clicks toggle the master switch.
   $("#sound-btn").addEventListener("click", () => Sound.setMaster(Sound.justUnlocked() ? true : !Sound.master));
-  if (!HOVER) $("#sound-hint span").textContent = "Tap a video to hear it";
+  if (!HOVER) $("#sound-hint span").textContent = "Tap anywhere to turn on sound";
 
   // ───────────────────────── player ─────────────────────────
   const viewIO = new IntersectionObserver((entries) => {
@@ -123,9 +126,7 @@
     let sprite = null, itemSecs = 0;
     v.muted = true; v.defaultMuted = true;
     Sound.register(v);
-    root.addEventListener("pointerenter", (e) => { if (e.pointerType !== "touch") Sound.hover(v); });
-    root.addEventListener("pointerleave", (e) => { if (e.pointerType !== "touch") Sound.leave(v); });
-    root.addEventListener("pointerdown", (e) => { if (e.pointerType === "touch") Sound.hover(v); });
+    v.addEventListener("play", () => Sound.claim(v)); // playing => audible, independent of the pointer
     const subs = [];
     let raf = 0;
     const tick = () => {
@@ -142,8 +143,8 @@
     v.addEventListener("loadedmetadata", tick);
     v.addEventListener("seeked", tick);
     const toggle = () => {
-      if (v.paused) { delete root.dataset.userPaused; Sound.hover(v); v.play().catch(() => {}); }
-      else if (Sound.justUnlocked()) Sound.hover(v); // the first click only turns sound on
+      if (v.paused) { delete root.dataset.userPaused; Sound.claim(v); v.play().catch(() => {}); }
+      else if (Sound.justUnlocked()) Sound.claim(v); // the first click only turns sound on
       else { root.dataset.userPaused = "1"; v.pause(); }
     };
     v.addEventListener("click", toggle);
@@ -151,7 +152,7 @@
     snd.addEventListener("click", (e) => {
       e.stopPropagation();
       const first = Sound.justUnlocked();
-      Sound.hover(v);
+      Sound.claim(v);
       Sound.setMaster(first ? true : !Sound.master);
       if (v.paused) { delete root.dataset.userPaused; v.play().catch(() => {}); }
     });
