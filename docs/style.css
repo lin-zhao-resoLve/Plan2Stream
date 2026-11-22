@@ -49,8 +49,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   transform: translateY(-101%); transition: transform .5s var(--ease);
 }
 .nav.show { transform: none; }
-.nav-logo { font-weight: 800; letter-spacing: -.025em; font-size: 18px; }
-.nav-logo span { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+/* paper title branding: dolphin mark + per-letter coloured "Plan2Stream" (Lato Bold) */
+.nav-logo { display: inline-flex; align-items: center; gap: 6px; font: 700 19px/1 "Lato", var(--font); letter-spacing: 0; }
+.nav-logo .logo-mark { height: 1.5em; width: auto; display: block; }
+.nav-logo .wm { white-space: nowrap; }
 .nav-links { display: flex; gap: 24px; margin-left: auto; font-size: 14px; color: var(--muted); }
 .nav-links a { position: relative; transition: color .2s; }
 .nav-links a:hover, .nav-links a.active { color: var(--ink); }
