@@ -4,7 +4,7 @@
   "repo": "Plan2Stream",
   "tag": "assets-v1"
  },
- "generated_utc": "2026-11-22T06:53:16Z",
+ "generated_utc": "2026-11-22T10:36:39Z",
  "wall": [
   {
    "id": "wall-01",
@@ -13450,5 +13450,11 @@
     "count": 60
    }
   }
- ]
+ ],
+ "film": {
+  "src": "plan2stream-film.mp4",
+  "poster": "plan2stream-film.jpg",
+  "seconds": 126.08,
+  "title": "Plan2Stream"
+ }
 }

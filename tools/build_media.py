@@ -380,6 +380,13 @@ def main() -> int:
             "sprite": dict(SPRITE, src=f"{sid}-sprite.jpg", count=sprite_count(dur)),
         })
     hour.sort(key=lambda h: str(h["id"]))
+    # Project film (rendered separately in plan2stream-film; copied in as media/plan2stream-film.mp4 + .jpg poster).
+    film = None
+    film_path = media / "plan2stream-film.mp4"
+    if film_path.exists():
+        secs = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0",
+                                     str(film_path)], capture_output=True, text=True, check=True).stdout.strip())
+        film = {"src": film_path.name, "poster": "plan2stream-film.jpg", "seconds": round(secs, 2), "title": "Plan2Stream"}
     manifest = {
         "release": RELEASE,
         "generated_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -387,6 +394,8 @@ def main() -> int:
         "items": items,
         "hour": hour,
     }
+    if film:
+        manifest["film"] = film
     args.manifest.parent.mkdir(parents=True, exist_ok=True)
     args.manifest.write_text(json.dumps(manifest, indent=1, ensure_ascii=False) + "\n")
     print(f"wrote {args.manifest}: {len(items)} items, {len(wall)} wall tiles; per task {counts}")

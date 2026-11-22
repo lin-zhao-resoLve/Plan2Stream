@@ -452,3 +452,12 @@ a.author:hover { color: #fff; border-bottom-color: var(--cyan); }
 .cursor-hint svg { flex: none; width: 14px; height: 14px; fill: var(--cyan); }
 .cursor-hint[hidden] { display: none; }
 .load-error { position: fixed; left: 50%; bottom: 24px; z-index: 80; transform: translateX(-50%); max-width: min(640px, calc(100% - 32px)); padding: 12px 16px; border-radius: 12px; background: #2a1016; border: 1px solid #6b2433; color: #ffd6de; font-size: 14px; }
+
+/* project film: hero "Video" pill opens a modal player */
+.film-modal { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 24px; background: rgba(5, 6, 10, .9); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.film-modal[hidden] { display: none; }
+.film-box { position: relative; width: min(1280px, 100%, calc((100vh - 96px) * 16 / 9)); }
+.film-box .player { aspect-ratio: 16 / 9; box-shadow: 0 30px 80px rgba(0, 0, 0, .6); }
+.film-close { position: absolute; top: -46px; right: 0; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line-2); background: rgba(255, 255, 255, .06); color: var(--ink); font-size: 24px; line-height: 1; cursor: pointer; }
+.film-close:hover { background: rgba(255, 255, 255, .14); }
+html.film-open, html.film-open body { overflow: hidden; }

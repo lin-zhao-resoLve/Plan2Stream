@@ -702,6 +702,37 @@
   });
   $$('a[aria-disabled="true"]').forEach((a) => a.addEventListener("click", (e) => e.preventDefault()));
 
+  // ───────────────────────── project film (hero "Video" pill → modal player) ─────────────────────────
+  function initFilm(film) {
+    const btn = $("#film-btn"), modal = $("#film-modal");
+    if (!btn || !modal) return;
+    if (!film || !film.src) { btn.style.display = "none"; return; }
+    let player = null;
+    const open = (e) => {
+      if (e) e.preventDefault();
+      modal.hidden = false;
+      document.documentElement.classList.add("film-open");
+      if (!player) {
+        player = makePlayer($(".film-player", modal), { tagged: false, big: true });
+        player.load(film);
+      }
+      Sound.claim(player.video);
+      player.video.play().catch(() => {});
+    };
+    const close = () => {
+      if (modal.hidden) return;
+      modal.hidden = true;
+      document.documentElement.classList.remove("film-open");
+      if (player) { player.root.dataset.userPaused = "1"; player.video.pause(); }
+      if (location.hash === "#video") history.replaceState(null, "", location.pathname + location.search);
+    };
+    btn.addEventListener("click", open);
+    $(".film-close", modal).addEventListener("click", close);
+    modal.addEventListener("click", (e) => { if (e.target === modal) close(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+    if (location.hash === "#video") open();
+  }
+
   // ───────────────────────── boot ─────────────────────────
   Sound.apply();
   initMethod3d();
@@ -717,6 +748,7 @@
       initBoard(items);
       initHour(data.hour || [], items);
       initCompare(data.comparisons);
+      try { initFilm(data.film); } catch (e) { console.warn("film", e); }
     })
     .catch((err) => {
       const box = $("#load-error");
