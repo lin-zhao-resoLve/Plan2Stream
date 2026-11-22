@@ -1,5 +1,15 @@
 # Plan2Stream
 
+<p align="center">
+  <a href="https://lin-zhao-resolve.github.io/Plan2Stream/#video">
+    <img src="docs/assets/plan2stream-film-poster.jpg" alt="Plan2Stream video (2 min, with sound)" width="100%">
+  </a>
+  <br>
+  <a href="https://lin-zhao-resolve.github.io/Plan2Stream/#video"><b>▶ Watch the video</b></a> ·
+  <a href="https://github.com/lin-zhao-resoLve/Plan2Stream/releases/download/assets-v1/plan2stream-film.mp4">Download MP4</a> ·
+  <a href="https://lin-zhao-resolve.github.io/Plan2Stream/">Project page</a>
+</p>
+
 Static project page for **Plan2Stream: Real-Time Long Audio-Video Generation with Continuous Planning**.
 
 ```
