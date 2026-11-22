@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=1" />
+  <link rel="stylesheet" href="style.css?v=2" />
 </head>
 <body>
   <!-- ───────────────────────── Navigation (appears after the intro) ───────────────────────── -->
@@ -122,6 +122,13 @@
   </div>
 
   <main id="site">
+    <!-- ───────────────────────── Video ───────────────────────── -->
+    <section class="section section-film" id="video" aria-label="Plan2Stream video">
+      <div class="wrap">
+        <div class="film-player" id="film-player"></div>
+      </div>
+    </section>
+
     <!-- ───────────────────────── 01 Overview ───────────────────────── -->
     <section class="section" id="overview">
       <div class="wrap">
@@ -276,12 +283,6 @@
 
   <button class="sound-hint" id="sound-hint" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg><span>Click anywhere to turn on sound</span></button>
   <div class="load-error" id="load-error" hidden></div>
-  <script src="main.js?v=1"></script>
-  <div class="film-modal" id="film-modal" hidden role="dialog" aria-modal="true" aria-label="Plan2Stream video">
-    <div class="film-box">
-      <button class="film-close" type="button" aria-label="Close video">&times;</button>
-      <div class="film-player"></div>
-    </div>
-  </div>
+  <script src="main.js?v=2"></script>
 </body>
 </html>

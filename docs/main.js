@@ -702,35 +702,18 @@
   });
   $$('a[aria-disabled="true"]').forEach((a) => a.addEventListener("click", (e) => e.preventDefault()));
 
-  // ───────────────────────── project film (hero "Video" pill → modal player) ─────────────────────────
+  // ───────────────────────── project film (inline, before Overview; the hero "Video" pill links to it) ─────────────────────────
   function initFilm(film) {
-    const btn = $("#film-btn"), modal = $("#film-modal");
-    if (!btn || !modal) return;
-    if (!film || !film.src) { btn.style.display = "none"; return; }
-    let player = null;
-    const open = (e) => {
-      if (e) e.preventDefault();
-      modal.hidden = false;
-      document.documentElement.classList.add("film-open");
-      if (!player) {
-        player = makePlayer($(".film-player", modal), { tagged: false, big: true });
-        player.load(film);
-      }
-      Sound.claim(player.video);
-      player.video.play().catch(() => {});
-    };
-    const close = () => {
-      if (modal.hidden) return;
-      modal.hidden = true;
-      document.documentElement.classList.remove("film-open");
-      if (player) { player.root.dataset.userPaused = "1"; player.video.pause(); }
-      if (location.hash === "#video") history.replaceState(null, "", location.pathname + location.search);
-    };
-    btn.addEventListener("click", open);
-    $(".film-close", modal).addEventListener("click", close);
-    modal.addEventListener("click", (e) => { if (e.target === modal) close(); });
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
-    if (location.hash === "#video") open();
+    const sec = $("#video"), root = $("#film-player");
+    if (!sec || !root) return;
+    if (!film || !film.src) {
+      sec.hidden = true;
+      const b = $("#film-btn");
+      if (b) b.style.display = "none";
+      return;
+    }
+    const player = makePlayer(root, { tagged: false, big: true });
+    player.load(film);
   }
 
   // ───────────────────────── boot ─────────────────────────
