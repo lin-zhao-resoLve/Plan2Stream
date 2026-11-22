@@ -1,4 +1,4 @@
-# Plan2Stream
+# Plan2Stream: Real-Time Long Audio-Video Generation with Continuous Planning.
 
 <p align="center">
   <a href="https://lin-zhao-resolve.github.io/Plan2Stream/#video">
@@ -10,7 +10,6 @@
   <a href="https://lin-zhao-resolve.github.io/Plan2Stream/">Project page</a>
 </p>
 
-Static project page for **Plan2Stream: Real-Time Long Audio-Video Generation with Continuous Planning**.
 
 ```
 docs/            the site (GitHub Pages: deploy from branch `main`, folder `/docs`)
