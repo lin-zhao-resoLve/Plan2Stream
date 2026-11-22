@@ -4,7 +4,7 @@
   "repo": "Plan2Stream",
   "tag": "assets-v1"
  },
- "generated_utc": "2026-11-22T23:10:58Z",
+ "generated_utc": "2026-11-22T23:34:59Z",
  "wall": [
   {
    "id": "wall-01",
@@ -266,7 +266,7 @@
    "poster": "t2v-12.jpg",
    "has_audio": false,
    "title": "Limestone walk",
-   "caption": "An adult and child walk slowly across a rocky, arid landscape under an overcast sky, with the adult in a black jacket and the child in yellow pants…",
+   "caption": "An adult walks slowly across a rocky, arid landscape under an overcast sky in a black jacket and yellow pants…",
    "input_image": null,
    "input_image_is_first_frame": false,
    "input_audio": null,
