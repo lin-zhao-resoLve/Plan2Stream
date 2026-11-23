@@ -606,8 +606,9 @@
     player.onTime((tm, d) => { if (curItem && waves.length) waves.forEach((c) => drawWave(c, curItem.waveform, d ? tm / d : 0)); });
     addEventListener("resize", () => { if (curItem) waves.forEach((c) => drawWave(c, curItem.waveform, player.video.duration ? player.video.currentTime / player.video.duration : 0)); });
 
-    const first = TASKS.find((t) => by[t.code].length);
-    setTask(first ? first.code : "T2V");
+    // Default view: T2AV (its first demo); falls back to the first task that has demos.
+    const first = by.T2AV && by.T2AV.length ? TASK.T2AV : TASKS.find((t) => by[t.code].length);
+    setTask(first ? first.code : "T2AV");
   }
 
   // ───────────────────────── long-horizon ─────────────────────────
