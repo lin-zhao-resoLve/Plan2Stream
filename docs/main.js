@@ -634,6 +634,28 @@
     pick(longs[0]);
   }
 
+  // ───────────────────────── minute-scale ─────────────────────────
+  function initMinute(list) {
+    // Minute-scale videos from media.json ("minute"); the section and its nav link go away when none are listed.
+    const sec = $("#minute");
+    if (!sec || !list.length) { if (sec) sec.hidden = true; $$('a[href="#minute"]').forEach((a) => a.remove()); return; }
+    const player = makePlayer($("#minute-player"), { big: true });
+    const clock = $("#minute-clock"), tabs = $("#minute-tabs"), cap = $("#minute-caption");
+    const pick = (it) => {
+      $$("button", tabs).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.id === it.id)));
+      player.load(it, `${it.task} · one continuous ${fmt(it.seconds)} rollout`);
+      cap.textContent = it.caption || "";
+    };
+    list.forEach((it) => {
+      const b = h("button", "", `${esc(it.title || it.id)}<small>${it.task} · ${fmt(it.seconds)}</small>`);
+      b.dataset.id = it.id;
+      b.addEventListener("click", () => pick(it));
+      tabs.append(b);
+    });
+    player.onTime((t, d) => { clock.innerHTML = `${fmtClock(t)}<span class="tot"> / ${fmt(d)}</span>`; });
+    pick(list[0]);
+  }
+
   // ───────────────────────── method schematic (3D, iframe) ─────────────────────────
   // Tell the embedded schematic when it is off-screen so it stops rendering.
   function initMethod3d() {
@@ -729,6 +751,7 @@
       const items = data.items || [];
       initHero(data.wall || []);
       initBoard(items);
+      initMinute(data.minute || []);
       initHour(data.hour || [], items);
       initCompare(data.comparisons);
       try { initFilm(data.film); } catch (e) { console.warn("film", e); }

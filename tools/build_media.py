@@ -123,25 +123,30 @@ def enc_wall(src: Path, out: Path, start: float, scale: str, fps: int, with_audi
 
 
 SPRITE = {"step": 60, "cols": 10, "w": 192, "h": 108}  # hour-scale scrub previews: one frame per minute
+SPRITE_MIN = {"step": 10, "cols": 10, "w": 192, "h": 108}  # minute-scale scrub previews: one frame per 10 s
 
 
-def sprite_count(duration: float) -> int:
+def sprite_count(duration: float, sprite: dict[str, int] = SPRITE) -> int:
     """Frames at 0, step, 2*step, ... strictly before the end (a frame at t == duration does not exist)."""
-    return max(1, -(-int(round(duration * 1000)) // (SPRITE["step"] * 1000)))
+    return max(1, -(-int(round(duration * 1000)) // (sprite["step"] * 1000)))
 
 
-def remux(src: Path, out: Path) -> None:
-    """Lossless copy (no re-encode) with the moov atom up front for fast start and seeking."""
-    run_ffmpeg(["-i", str(src), "-map", "0", "-c", "copy", "-movflags", "+faststart"], out)
+def remux(src: Path, out: Path, end: float | None = None) -> None:
+    """Lossless copy (no re-encode) with the moov atom up front for fast start and seeking.
+
+    `end` keeps only the first `end` seconds (stream copy; the cut starts on the first keyframe).
+    """
+    run_ffmpeg(["-i", str(src)] + (["-t", f"{end}"] if end else []) + ["-map", "0", "-c", "copy", "-movflags", "+faststart"],
+               out)
 
 
-def enc_sprite(src: Path, out: Path, duration: float) -> None:
-    """Grid of one thumbnail every SPRITE['step'] s (keyframes only, so an hour decodes quickly)."""
-    count = sprite_count(duration)
-    rows = -(-count // SPRITE["cols"])
-    run_ffmpeg(["-skip_frame", "nokey", "-i", str(src), "-an",
-                "-vf", f"fps=1/{SPRITE['step']},scale={SPRITE['w']}:{SPRITE['h']},setsar=1,"
-                       f"tile={SPRITE['cols']}x{rows}",
+def enc_sprite(src: Path, out: Path, duration: float, sprite: dict[str, int] = SPRITE) -> None:
+    """Grid of one thumbnail every sprite['step'] s (keyframes only, so an hour decodes quickly)."""
+    count = sprite_count(duration, sprite)
+    rows = -(-count // sprite["cols"])
+    run_ffmpeg(["-skip_frame", "nokey", "-t", f"{duration}", "-i", str(src), "-an",
+                "-vf", f"fps=1/{sprite['step']},scale={sprite['w']}:{sprite['h']},setsar=1,"
+                       f"tile={sprite['cols']}x{rows}",
                 "-frames:v", "1", "-q:v", "4"], out)
 
 
@@ -312,6 +317,13 @@ def main() -> int:
             add(f"{sid}.mp4", lambda src=src, sid=sid: remux(src, media / f"{sid}.mp4"))
             add(f"{sid}.jpg", lambda src=src, sid=sid: enc_still(src, media / f"{sid}.jpg", 960, 60.0))
             add(f"{sid}-sprite.jpg", lambda src=src, sid=sid, dur=dur: enc_sprite(src, media / f"{sid}-sprite.jpg", dur))
+        if s["role"] == "minute":  # minute-scale demo: lossless copy (optionally only the first trim_end s) + sprite
+            end = float(s["trim_end"]) if s.get("trim_end") else None
+            dur = min(duration_of(info), end or float("inf"))
+            add(f"{sid}.mp4", lambda src=src, sid=sid, end=end: remux(src, media / f"{sid}.mp4", end))
+            add(f"{sid}.jpg", lambda src=src, sid=sid: enc_still(src, media / f"{sid}.jpg", 960, 0.0))  # = first frame
+            add(f"{sid}-sprite.jpg", lambda src=src, sid=sid, dur=dur:
+                enc_sprite(src, media / f"{sid}-sprite.jpg", dur, SPRITE_MIN))
 
     failures: list[str] = []
 
@@ -380,6 +392,21 @@ def main() -> int:
             "sprite": dict(SPRITE, src=f"{sid}-sprite.jpg", count=sprite_count(dur)),
         })
     hour.sort(key=lambda h: str(h["id"]))
+    minute: list[dict[str, Any]] = []
+    for s in sources:
+        sid = s["id"]
+        if s["role"] != "minute" or not all(done(media / f) for f in (f"{sid}.mp4", f"{sid}.jpg", f"{sid}-sprite.jpg")):
+            continue
+        info = ffprobe(media / f"{sid}.mp4")
+        dur = duration_of(info)
+        minute.append({
+            "id": sid, "task": s["task"], "seconds": round(dur, 2),
+            "src": f"{sid}.mp4", "poster": f"{sid}.jpg", "has_audio": has_stream(info, "audio"),
+            "title": s.get("title") or sid, "caption": s.get("caption") or "",
+            "sprite": dict(SPRITE_MIN, src=f"{sid}-sprite.jpg", count=sprite_count(dur, SPRITE_MIN)),
+        })
+    mrank = {s["id"]: s.get("minute_rank", 99) for s in sources if s["role"] == "minute"}  # tab order (sources.json)
+    minute.sort(key=lambda h: (mrank.get(h["id"], 99), str(h["id"])))
     # Project film (rendered separately in plan2stream-film; copied in as media/plan2stream-film.mp4 + .jpg poster).
     film = None
     film_path = media / "plan2stream-film.mp4"
@@ -392,6 +419,7 @@ def main() -> int:
         "generated_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "wall": wall,
         "items": items,
+        "minute": minute,
         "hour": hour,
     }
     if film:

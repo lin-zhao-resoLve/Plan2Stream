@@ -4,7 +4,7 @@
   "repo": "Plan2Stream",
   "tag": "assets-v1"
  },
- "generated_utc": "2026-11-22T23:34:59Z",
+ "generated_utc": "2026-11-23T03:34:11Z",
  "wall": [
   {
    "id": "wall-01",
@@ -274,16 +274,16 @@
    "waveform": null
   },
   {
-   "id": "t2v-13",
+   "id": "t2v-20",
    "task": "T2V",
    "seconds": 10.0,
    "width": 960,
    "height": 544,
-   "src": "t2v-13.mp4",
-   "poster": "t2v-13.jpg",
+   "src": "t2v-20.mp4",
+   "poster": "t2v-20.jpg",
    "has_audio": false,
-   "title": "Hillside selfie",
-   "caption": "Four young adults take a joyful selfie outdoors, laughing and holding green glass bottles, with a bright sky and green hills in the background.",
+   "title": "Beach bodyboard walk",
+   "caption": "On a bright, sunny day at the beach, a man and a woman walk through the shallow, foamy waves near the shore.",
    "input_image": null,
    "input_image_is_first_frame": false,
    "input_audio": null,
@@ -376,16 +376,16 @@
    "waveform": null
   },
   {
-   "id": "t2v-20",
+   "id": "t2v-13",
    "task": "T2V",
    "seconds": 10.0,
    "width": 960,
    "height": 544,
-   "src": "t2v-20.mp4",
-   "poster": "t2v-20.jpg",
+   "src": "t2v-13.mp4",
+   "poster": "t2v-13.jpg",
    "has_audio": false,
-   "title": "Beach bodyboard walk",
-   "caption": "On a bright, sunny day at the beach, a man and a woman walk through the shallow, foamy waves near the shore.",
+   "title": "Hillside selfie",
+   "caption": "Four young adults take a joyful selfie outdoors, laughing and holding green glass bottles, with a bright sky and green hills in the background.",
    "input_image": null,
    "input_image_is_first_frame": false,
    "input_audio": null,
@@ -13411,6 +13411,62 @@
     0.013,
     0.198
    ]
+  }
+ ],
+ "minute": [
+  {
+   "id": "minute-04",
+   "task": "TA2V",
+   "seconds": 300.0,
+   "src": "minute-04.mp4",
+   "poster": "minute-04.jpg",
+   "has_audio": true,
+   "title": "Garden",
+   "caption": "Five minutes driven by text and a real speech track: a speaker in a dark gray t-shirt, seated under a wooden pergola framed by green leaves.",
+   "sprite": {
+    "step": 10,
+    "cols": 10,
+    "w": 192,
+    "h": 108,
+    "src": "minute-04-sprite.jpg",
+    "count": 30
+   }
+  },
+  {
+   "id": "minute-05",
+   "task": "ITA2AV",
+   "seconds": 240.08,
+   "src": "minute-05.mp4",
+   "poster": "minute-05.jpg",
+   "has_audio": true,
+   "title": "Pergola",
+   "caption": "Four minutes conditioned on one reference image and an input speech track, with picture and audio generated together: a speaker in a dark gray t-shirt, seated under a wooden pergola framed by green leaves.",
+   "sprite": {
+    "step": 10,
+    "cols": 10,
+    "w": 192,
+    "h": 108,
+    "src": "minute-05-sprite.jpg",
+    "count": 25
+   }
+  },
+  {
+   "id": "minute-02",
+   "task": "T2AV",
+   "seconds": 120.08,
+   "src": "minute-02.mp4",
+   "poster": "minute-02.jpg",
+   "has_audio": true,
+   "title": "Table lamp",
+   "caption": "Two minutes of jointly generated picture and speech from text: a man in glasses and a dark textured blazer, seated before a lit table lamp and window blinds.",
+   "sprite": {
+    "step": 10,
+    "cols": 10,
+    "w": 192,
+    "h": 108,
+    "src": "minute-02-sprite.jpg",
+    "count": 13
+   }
   }
  ],
  "hour": [

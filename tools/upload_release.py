@@ -81,7 +81,7 @@ def referenced_files(manifest: Path) -> set[str]:
     """Every media file name the page loads, read from docs/media.json."""
     m = json.loads(manifest.read_text())
     names: set[str] = set()
-    for entry in m.get("items", []) + m.get("wall", []) + m.get("hour", []) + ([m["film"]] if m.get("film") else []):
+    for entry in m.get("items", []) + m.get("wall", []) + m.get("minute", []) + m.get("hour", []) + ([m["film"]] if m.get("film") else []):
         for key in ("src", "poster", "plan", "input_image", "input_audio"):
             if entry.get(key):
                 names.add(str(entry[key]))

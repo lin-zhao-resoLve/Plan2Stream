@@ -19,6 +19,7 @@
       <a href="#overview">Overview</a>
       <a href="#tasks">Tasks</a>
       <a href="#hour">Hour-scale</a>
+      <a href="#minute">Minute-scale</a>
       <a href="#method">Method</a>
       <a href="#compare" data-optional="compare">Compare</a>
       <a href="#bibtex">BibTeX</a>
@@ -225,10 +226,27 @@
       </div>
     </section>
 
+    <!-- ───────────────────────── 04 Minute-scale ───────────────────────── -->
+    <section class="section" id="minute">
+      <div class="wrap">
+        <p class="eyebrow reveal">04 / Minute-scale generation</p>
+        <h2 class="display reveal">Minutes, in <span class="grad">one take.</span></h2>
+        <p class="lead reveal">Each video below is a single continuous rollout at 960×544 and 24 fps.</p>
+        <div class="long-stage reveal">
+          <div id="minute-player"></div>
+          <div class="long-hud">
+            <div class="long-clock" id="minute-clock">00:00:00.0<span class="tot"> / 5:00</span></div>
+            <div class="long-tabs" id="minute-tabs"></div>
+          </div>
+          <p class="long-caption" id="minute-caption"></p>
+        </div>
+      </div>
+    </section>
+
     <!-- ───────────────────────── 04 Method ───────────────────────── -->
     <section class="section" id="method">
       <div class="wrap">
-        <p class="eyebrow reveal">04 / Method</p>
+        <p class="eyebrow reveal">05 / Method</p>
         <h2 class="display reveal">Planning and synthesis,<br /><span class="grad">running in parallel.</span></h2>
 
         <div class="flow3d reveal">
@@ -250,7 +268,7 @@
     <!-- ───────────────────────── 05 Comparisons (rendered only when media.json has them) ───────────────────────── -->
     <section class="section" id="compare" hidden>
       <div class="wrap">
-        <p class="eyebrow reveal">05 / Comparisons</p>
+        <p class="eyebrow reveal">06 / Comparisons</p>
         <h2 class="display reveal">Side by side.<br /><span class="grad">Same prompt, same clock.</span></h2>
         <div class="compare-list" id="compare-list"></div>
       </div>
@@ -283,6 +301,6 @@
 
   <button class="sound-hint" id="sound-hint" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg><span>Click anywhere to turn on sound</span></button>
   <div class="load-error" id="load-error" hidden></div>
-  <script src="main.js?v=3"></script>
+  <script src="main.js?v=4"></script>
 </body>
 </html>
