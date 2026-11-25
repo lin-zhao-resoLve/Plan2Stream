@@ -259,9 +259,23 @@ def main() -> int:
     pos = {id(src_): n for n, src_ in enumerate(sources)}
     sources.sort(key=lambda s: (TASK_ORDER.index(s["task"]), s.get("demo_rank", pos[id(s)])))
 
+    # A source whose generation dir was archived off this machine falls back to the page's own copy:
+    # item/hour/minute media are lossless stream copies of the source, and a wall-only tile can only be
+    # kept as already built. "off" sources without a source are skipped (they produce nothing).
+    srcs: dict[str, Path] = {}
     probes: dict[str, dict[str, Any]] = {}
     for s in sources:
-        probes[s["id"]] = ffprobe(Path(s["source_video"]))
+        sid = s["id"]
+        src = Path(s["source_video"])
+        if not src.exists():
+            copy = media / (f"{wall_slot[sid]}.mp4" if s["role"] == "wall" else f"{sid}.mp4")
+            if not done(copy):
+                if s["role"] == "off":
+                    continue
+                raise SystemExit(f"{sid}: source {src} is missing and has no built page copy; restore it from S3")
+            src = copy
+        srcs[sid] = src
+        probes[sid] = ffprobe(src)
 
     jobs: list[Job] = []
 
@@ -275,7 +289,9 @@ def main() -> int:
     wall_entries: list[dict[str, object]] = []
     for s in sources:
         sid, task = s["id"], s["task"]
-        src = Path(s["source_video"])
+        if sid not in probes:  # "off" source that is no longer available
+            continue
+        src = srcs[sid]
         info = probes[sid]
         audio = has_stream(info, "audio")
         if s["role"] in ("item", "both"):  # role "wall": hero-wall tile only, not a demo item
@@ -293,6 +309,8 @@ def main() -> int:
                     lambda p=Path(s["input_audio"]), sid=sid: enc_audio(p, media / f"{sid}-input.m4a"))
         if s["role"] in ("wall", "both"):
             wid = wall_slot[sid]
+            if src == media / f"{wid}.mp4" and any(want(f) for f in (f"{wid}.mp4", f"{wid}-plan.mp4", f"{wid}.jpg")):
+                raise SystemExit(f"{sid}: wall tile {wid} needs its source {s['source_video']}; restore it from S3")
             if "wall_start" in s:  # explicit segment start (seconds) for this tile
                 start = float(s["wall_start"])
             else:
